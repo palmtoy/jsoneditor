@@ -15,28 +15,42 @@
 		<div id="jsoneditorRight" class="right-side"></div>
 
 		<script>
+			let jsonLeft = {};
+			let jsonRight = {};
+
 			const optionsLeft = {
 				mode: 'code',
 				modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
 				onModeChange: function (newMode, oldMode) {
 					console.log('Mode switched from', oldMode, 'to', newMode)
+				},
+				onChangeText: function (jsonObj) {
+					jsonLeft = jsonObj;
+					localStorage.setItem('jsonLeft', jsonLeft);
 				}
 			};
 			const optionsRight = {
-				mode: 'tree',
+				mode: 'code',
 				modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
 				onModeChange: function (newMode, oldMode) {
 					console.log('Mode switched from', oldMode, 'to', newMode)
+				},
+				onChangeText: function (jsonObj) {
+					jsonRight = jsonObj;
+					localStorage.setItem('jsonRight', jsonRight);
 				}
 			};
-
-			const json = {};
 
 			const containerLeft = document.getElementById('jsoneditorLeft');
 			const containerRight = document.getElementById('jsoneditorRight');
 
-			const editorLeft = new JSONEditor(containerLeft, optionsLeft, json);
-			const editorRight = new JSONEditor(containerRight, optionsRight, json);
+			const tmpJsonLeft = localStorage.getItem('jsonLeft') || '{}';
+			const tmpJsonRight = localStorage.getItem('jsonRight') || '{}';
+			jsonLeft = JSON.parse(tmpJsonLeft);
+			jsonRight = JSON.parse(tmpJsonRight);
+
+			window.editorLeft = new JSONEditor(containerLeft, optionsLeft, jsonLeft);
+			window.editorRight = new JSONEditor(containerRight, optionsRight, jsonRight);
 		</script>
 	</body>
 
