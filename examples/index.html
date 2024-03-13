@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<!-- when using the mode "code", it's important to specify charset utf-8 -->
+		<meta charset="utf-8">
+
+		<title>JSONEditor · LZG</title>
+
+		<link href="../dist/jsoneditor.css" rel="stylesheet" type="text/css">
+		<script src="../dist/jsoneditor.js"></script>
+	</head>
+
+	<body>
+		<div id="jsoneditorLeft" class="left-side"></div>
+		<div id="jsoneditorRight" class="right-side"></div>
+
+		<script>
+			const optionsLeft = {
+				mode: 'code',
+				modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
+				onModeChange: function (newMode, oldMode) {
+					console.log('Mode switched from', oldMode, 'to', newMode)
+				}
+			};
+			const optionsRight = {
+				mode: 'tree',
+				modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
+				onModeChange: function (newMode, oldMode) {
+					console.log('Mode switched from', oldMode, 'to', newMode)
+				}
+			};
+
+			const json = {};
+
+			const containerLeft = document.getElementById('jsoneditorLeft');
+			const containerRight = document.getElementById('jsoneditorRight');
+
+			const editorLeft = new JSONEditor(containerLeft, optionsLeft, json);
+			const editorRight = new JSONEditor(containerRight, optionsRight, json);
+		</script>
+	</body>
+
+  <style type="text/css">
+    body {
+      font: 10.5pt arial;
+      color: #4d4d4d;
+      line-height: 150%;
+      width: 500px;
+    }
+
+    code {
+      background-color: #f5f5f5;
+    }
+
+		.left-side {
+			position: absolute; 
+			top: 10px;
+			left: 10px;
+			width: 1250px;
+			height: 98%;
+		}
+
+		.right-side {
+			top: 10px;
+			position: absolute;
+			left: 1310px;
+			right: 10px;
+			height: 98%;
+		}
+  </style>
+</html>
