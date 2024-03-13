@@ -254,7 +254,7 @@ textmode.create = function (container, options = {}) {
         // for now, but this should be fixed.
         window.open(poweredBy.href, poweredBy.target, 'noreferrer')
       }
-      this.menu.appendChild(poweredBy)
+      // this.menu.appendChild(poweredBy)
     }
   }
 
