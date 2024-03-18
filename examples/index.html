@@ -1,85 +1,102 @@
 <!DOCTYPE HTML>
 <html lang="en">
-	<head>
-		<!-- when using the mode "code", it's important to specify charset utf-8 -->
-		<meta charset="utf-8">
 
-		<title>JSONEditor · LZG</title>
+<head>
+	<!-- when using the mode "code", it's important to specify charset utf-8 -->
+	<meta charset="utf-8">
 
-		<link href="../dist/jsoneditor.css" rel="stylesheet" type="text/css">
-		<script src="../dist/jsoneditor.js"></script>
-	</head>
+	<title>JSONEditor · LZG</title>
 
-	<body>
-		<div id="jsoneditorLeft" class="left-side"></div>
-		<div id="jsoneditorRight" class="right-side"></div>
+	<link href="../dist/jsoneditor.css" rel="stylesheet" type="text/css">
+	<script src="../dist/jsoneditor.js"></script>
+</head>
 
-		<script>
-			let jsonLeft = {};
-			let jsonRight = {};
+<body>
+	<div id="jsoneditorLeft" class="left-side"></div>
+	<div id="jsoneditorRight" class="right-side"></div>
 
-			const optionsLeft = {
-				mode: 'code',
-				modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
-				onModeChange: function (newMode, oldMode) {
-					console.log('Mode switched from', oldMode, 'to', newMode)
-				},
-				onChangeText: function (jsonObj) {
-					jsonLeft = jsonObj;
-					localStorage.setItem('jsonLeft', jsonLeft);
-				}
-			};
-			const optionsRight = {
-				mode: 'code',
-				modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
-				onModeChange: function (newMode, oldMode) {
-					console.log('Mode switched from', oldMode, 'to', newMode)
-				},
-				onChangeText: function (jsonObj) {
-					jsonRight = jsonObj;
-					localStorage.setItem('jsonRight', jsonRight);
-				}
-			};
+	<script>
+		const containerLeft = document.getElementById('jsoneditorLeft');
+		const containerRight = document.getElementById('jsoneditorRight');
 
-			const containerLeft = document.getElementById('jsoneditorLeft');
-			const containerRight = document.getElementById('jsoneditorRight');
-
-			const tmpJsonLeft = localStorage.getItem('jsonLeft') || '{}';
-			const tmpJsonRight = localStorage.getItem('jsonRight') || '{}';
-			jsonLeft = JSON.parse(tmpJsonLeft);
-			jsonRight = JSON.parse(tmpJsonRight);
-
-			window.editorLeft = new JSONEditor(containerLeft, optionsLeft, jsonLeft);
-			window.editorRight = new JSONEditor(containerRight, optionsRight, jsonRight);
-		</script>
-	</body>
-
-  <style type="text/css">
-    body {
-      font: 10.5pt arial;
-      color: #4d4d4d;
-      line-height: 150%;
-      width: 500px;
-    }
-
-    code {
-      background-color: #f5f5f5;
-    }
-
-		.left-side {
-			position: absolute; 
-			top: 10px;
-			bottom: 10px;
-			left: 10px;
-			width: 1240px;
+		function handleWindowResizeEvt() {
+			const winWidth = window.innerWidth;
+			if (winWidth <= 2000) {
+				containerLeft.style.width = (winWidth - 20) + 'px';
+				containerRight.style.display = 'none';
+			} else {
+				containerLeft.style.width = '1240px';
+				containerRight.style.display = 'block';
+			}
 		}
+		window.onload = (_evt) => {
+			handleWindowResizeEvt();
+		};
+		window.onresize = handleWindowResizeEvt;
+		let jsonLeft = {};
+		let jsonRight = {};
 
-		.right-side {
-			position: absolute;
-			top: 10px;
-			bottom: 10px;
-			left: 1310px;
-			right: 10px;
-		}
-  </style>
+
+		const optionsLeft = {
+			mode: 'code',
+			modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
+			onModeChange: function (newMode, oldMode) {
+				console.log('Mode switched from', oldMode, 'to', newMode)
+			},
+			onChangeText: function (jsonObj) {
+				jsonLeft = jsonObj;
+				localStorage.setItem('jsonLeft', jsonLeft);
+			}
+		};
+		const optionsRight = {
+			mode: 'code',
+			modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
+			onModeChange: function (newMode, oldMode) {
+				console.log('Mode switched from', oldMode, 'to', newMode)
+			},
+			onChangeText: function (jsonObj) {
+				jsonRight = jsonObj;
+				localStorage.setItem('jsonRight', jsonRight);
+			}
+		};
+
+		const tmpJsonLeft = localStorage.getItem('jsonLeft') || '{}';
+		const tmpJsonRight = localStorage.getItem('jsonRight') || '{}';
+		jsonLeft = JSON.parse(tmpJsonLeft);
+		jsonRight = JSON.parse(tmpJsonRight);
+
+		window.editorLeft = new JSONEditor(containerLeft, optionsLeft, jsonLeft);
+		window.editorRight = new JSONEditor(containerRight, optionsRight, jsonRight);
+	</script>
+</body>
+
+<style type="text/css">
+	body {
+		font: 10.5pt arial;
+		color: #4d4d4d;
+		line-height: 150%;
+		width: 500px;
+	}
+
+	code {
+		background-color: #f5f5f5;
+	}
+
+	.left-side {
+		position: absolute;
+		top: 10px;
+		bottom: 10px;
+		left: 10px;
+		width: 1240px;
+	}
+
+	.right-side {
+		position: absolute;
+		top: 10px;
+		bottom: 10px;
+		left: 1310px;
+		right: 10px;
+	}
+</style>
+
 </html>
