@@ -29,13 +29,14 @@
 				containerRight.style.display = 'block';
 			}
 		}
+		window.onresize = handleWindowResizeEvt;
 		window.onload = (_evt) => {
 			handleWindowResizeEvt();
 		};
-		window.onresize = handleWindowResizeEvt;
+
+		const itemPrefix = window.location.pathname.split('/').pop().split('.').shift();
 		let jsonLeft = {};
 		let jsonRight = {};
-
 
 		const optionsLeft = {
 			mode: 'code',
@@ -45,7 +46,7 @@
 			},
 			onChangeText: function (jsonObj) {
 				jsonLeft = jsonObj;
-				localStorage.setItem('jsonLeft', jsonLeft);
+				localStorage.setItem(`${itemPrefix}-jsonLeft`, jsonLeft);
 			}
 		};
 		const optionsRight = {
@@ -56,12 +57,12 @@
 			},
 			onChangeText: function (jsonObj) {
 				jsonRight = jsonObj;
-				localStorage.setItem('jsonRight', jsonRight);
+				localStorage.setItem(`${itemPrefix}-jsonRight`, jsonRight);
 			}
 		};
 
-		const tmpJsonLeft = localStorage.getItem('jsonLeft') || '{}';
-		const tmpJsonRight = localStorage.getItem('jsonRight') || '{}';
+		const tmpJsonLeft = localStorage.getItem(`${itemPrefix}-jsonLeft`) || '{}';
+		const tmpJsonRight = localStorage.getItem(`${itemPrefix}-jsonRight`) || '{}';
 		jsonLeft = JSON.parse(tmpJsonLeft);
 		jsonRight = JSON.parse(tmpJsonRight);
 
