@@ -79,24 +79,29 @@
 		window.editorLeft = new JSONEditor(containerLeft, optionsLeft, jsonLeft);
 		window.editorRight = new JSONEditor(containerRight, optionsRight, jsonRight);
 
+		// build json data from string
+		function buildJsonData(jsonData) {
+			if (typeof jsonData === 'string') {
+				jsonData = jsonData.trim();
+				if (jsonData.length === 0) {
+						jsonData = '{}';
+				}
+				jsonData = JSON.parse(jsonData);
+			}
+			return jsonData;
+		}
 		// copy left json editor's data to right
 		function copyLeft2Right() {
 			jsonRight = jsonLeft;
-			if (typeof jsonRight === 'string') {
-				jsonRight = JSON.parse(jsonRight);
-			}
+			jsonRight = buildJsonData(jsonRight);
 			window.editorRight.set(jsonRight);
 			localStorage.setItem(`${itemPrefix}-jsonRight`, JSON.stringify(jsonRight));
 		}
 		// exchange 2 json editors' data
 		function exchangeLeftRight() {
 			[jsonLeft, jsonRight] = [jsonRight, jsonLeft];
-			if (typeof jsonLeft === 'string') {
-				jsonLeft = JSON.parse(jsonLeft);
-			}
-			if (typeof jsonRight === 'string') {
-				jsonRight = JSON.parse(jsonRight);
-			}
+			jsonLeft = buildJsonData(jsonLeft);
+			jsonRight = buildJsonData(jsonRight);
 			window.editorLeft.set(jsonLeft);
 			window.editorRight.set(jsonRight);
 			localStorage.setItem(`${itemPrefix}-jsonLeft`, JSON.stringify(jsonLeft));
