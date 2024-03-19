@@ -14,12 +14,14 @@
 <body>
 	<div id="jsoneditorLeft" class="left-side"></div>
 	<div id="jsoneditorRight" class="right-side"></div>
-	<button type="button" class="btn-right" onclick="copyLeft2Right()">→</button>
-	<button type="button" class="btn-exchange" onclick="exchangeLeftRight()">↔</button>
+	<button id="btnCopyLeft2Right" type="button" class="btn-right" onclick="copyLeft2Right()">→</button>
+	<button id="btnExchangeLeftRight" type="button" class="btn-exchange" onclick="exchangeLeftRight()">↔</button>
 
 	<script>
 		const containerLeft = document.getElementById('jsoneditorLeft');
 		const containerRight = document.getElementById('jsoneditorRight');
+		const btnCopyLeft2Right = document.getElementById('btnCopyLeft2Right');
+		const btnExchangeLeftRight = document.getElementById('btnExchangeLeftRight');
 
 		// handle brower window resize event
 		function handleWindowResizeEvt() {
@@ -27,9 +29,13 @@
 			if (winWidth <= 2000) {
 				containerLeft.style.width = (winWidth - 20) + 'px';
 				containerRight.style.display = 'none';
+				btnCopyLeft2Right.style.display = 'none';
+				btnExchangeLeftRight.style.display = 'none';
 			} else {
 				containerLeft.style.width = '1240px';
 				containerRight.style.display = 'block';
+				btnCopyLeft2Right.style.display = 'block';
+				btnExchangeLeftRight.style.display = 'block';
 			}
 		}
 		window.onresize = handleWindowResizeEvt;
