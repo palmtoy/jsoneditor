@@ -14,11 +14,14 @@
 <body>
 	<div id="jsoneditorLeft" class="left-side"></div>
 	<div id="jsoneditorRight" class="right-side"></div>
+	<button type="button" class="btn-right" onclick="copyLeft2Right()">→</button>
+	<button type="button" class="btn-exchange" onclick="exchangeLeftRight()">↔</button>
 
 	<script>
 		const containerLeft = document.getElementById('jsoneditorLeft');
 		const containerRight = document.getElementById('jsoneditorRight');
 
+		// handle brower window resize event
 		function handleWindowResizeEvt() {
 			const winWidth = window.innerWidth;
 			if (winWidth <= 2000) {
@@ -34,6 +37,7 @@
 			handleWindowResizeEvt();
 		};
 
+		// config and init json editors
 		const itemPrefix = window.location.pathname.split('/').pop().split('.').shift();
 		let jsonLeft = {};
 		let jsonRight = {};
@@ -60,7 +64,7 @@
 				localStorage.setItem(`${itemPrefix}-jsonRight`, jsonRight);
 			}
 		};
-
+		// load json data from local storage
 		const tmpJsonLeft = localStorage.getItem(`${itemPrefix}-jsonLeft`) || '{}';
 		const tmpJsonRight = localStorage.getItem(`${itemPrefix}-jsonRight`) || '{}';
 		jsonLeft = JSON.parse(tmpJsonLeft);
@@ -68,6 +72,30 @@
 
 		window.editorLeft = new JSONEditor(containerLeft, optionsLeft, jsonLeft);
 		window.editorRight = new JSONEditor(containerRight, optionsRight, jsonRight);
+
+		// copy left json editor's data to right
+		function copyLeft2Right() {
+			jsonRight = jsonLeft;
+			if (typeof jsonRight === 'string') {
+				jsonRight = JSON.parse(jsonRight);
+			}
+			window.editorRight.set(jsonRight);
+			localStorage.setItem(`${itemPrefix}-jsonRight`, JSON.stringify(jsonRight));
+		}
+		// exchange 2 json editors' data
+		function exchangeLeftRight() {
+			[jsonLeft, jsonRight] = [jsonRight, jsonLeft];
+			if (typeof jsonLeft === 'string') {
+				jsonLeft = JSON.parse(jsonLeft);
+			}
+			if (typeof jsonRight === 'string') {
+				jsonRight = JSON.parse(jsonRight);
+			}
+			window.editorLeft.set(jsonLeft);
+			window.editorRight.set(jsonRight);
+			localStorage.setItem(`${itemPrefix}-jsonLeft`, JSON.stringify(jsonLeft));
+			localStorage.setItem(`${itemPrefix}-jsonRight`, JSON.stringify(jsonRight));
+		}
 	</script>
 </body>
 
@@ -97,6 +125,24 @@
 		bottom: 10px;
 		left: 1310px;
 		right: 10px;
+	}
+
+	.btn-exchange {
+		position: absolute;
+		top: 509px;
+		left: 1260px;
+		width: 40px;
+		height: 25px;
+		cursor: pointer;
+	}
+
+	.btn-right {
+		position: absolute;
+		top: 473px;
+		left: 1260px;
+		width: 40px;
+		height: 25px;
+		cursor: pointer;
 	}
 </style>
 
