@@ -52,10 +52,15 @@
 			mode: 'code',
 			modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
 			onModeChange: function (newMode, oldMode) {
-				console.log('Mode switched from', oldMode, 'to', newMode)
+				console.log('_optionsLeft ~ Mode switched from', oldMode, 'to', newMode)
 			},
 			onChangeText: function (jsonObj) {
 				jsonLeft = jsonObj;
+				try {
+					JSON.parse(jsonLeft);
+				} catch (err) {
+					return console.error('_optionsLeft ~ _onChangeText:', err);
+				}
 				localStorage.setItem(`${itemPrefix}-jsonLeft`, jsonLeft);
 			}
 		};
@@ -63,10 +68,15 @@
 			mode: 'code',
 			modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
 			onModeChange: function (newMode, oldMode) {
-				console.log('Mode switched from', oldMode, 'to', newMode)
+				console.log('_optionsRight ~ Mode switched from', oldMode, 'to', newMode)
 			},
 			onChangeText: function (jsonObj) {
 				jsonRight = jsonObj;
+				try {
+					JSON.parse(jsonRight);
+				} catch (err) {
+					return console.error('_optionsRight ~ _onChangeText:', err);
+				}
 				localStorage.setItem(`${itemPrefix}-jsonRight`, jsonRight);
 			}
 		};
@@ -84,7 +94,7 @@
 			if (typeof jsonData === 'string') {
 				jsonData = jsonData.trim();
 				if (jsonData.length === 0) {
-						jsonData = '{}';
+					jsonData = '{}';
 				}
 				jsonData = JSON.parse(jsonData);
 			}
