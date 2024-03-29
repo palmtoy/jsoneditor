@@ -14,8 +14,8 @@
 <body>
 	<div id="jsoneditorLeft" class="left-side"></div>
 	<div id="jsoneditorRight" class="right-side"></div>
-	<button id="btnCopyLeft2Right" type="button" class="btn-right" onclick="copyLeft2Right()">→</button>
-	<button id="btnExchangeLeftRight" type="button" class="btn-exchange" onclick="exchangeLeftRight()">↔</button>
+	<button id="btnCopyLeft2Right" type="button" class="btn-right" onclick="copyLeft2Right()">▸▸</button>
+	<button id="btnExchangeLeftRight" type="button" class="btn-exchange" onclick="exchangeLeftRight()">◂-▸</button>
 
 	<script>
 		const containerLeft = document.getElementById('jsoneditorLeft');
@@ -157,6 +157,7 @@
 		cursor: pointer;
 		/* background-color: #00ccff; */
 	}
+
 	.btn-right:hover {
 		background-color: #00a3cc;
 	}
@@ -170,10 +171,10 @@
 		cursor: pointer;
 		/* background-color: #ff8533; */
 	}
+
 	.btn-exchange:hover {
 		background-color: #ff6600;
 	}
-
 </style>
 
 </html>
